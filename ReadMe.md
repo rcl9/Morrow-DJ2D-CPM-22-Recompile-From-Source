@@ -1,6 +1,6 @@
- # Morrow DISK JOCKEY 2D CP/M 2.2 "SYSGEN" Recompile From Source Files (For Exidy Sorcerer)
+# Morrow DISK JOCKEY 2D CP/M 2.2 "SYSGEN" Recompile From Source Files (For Exidy Sorcerer)
 
-This repo carefully documents how to rebuild a CP/M 2.2 "SYSGEN" image, from scratch, for the Morrow DISK JOCKEY 2D S-100 8" floppy disk drive controller card. In particular, the image will be set up for the Exidy Sorcerer variation whereby the DJ2D's ROM firmware is located at D000H instead of the standard E000H. Nonetheless, you could still follow the same process outlined herein to recompile the image for the SOL and other target machines if you can find an appropriate CBIOS.ASM for your machine. 
+This repo documents how to rebuild a CP/M 2.2 "SYSGEN" image, from scratch, for the Morrow DISK JOCKEY 2D S-100 8" floppy disk drive controller card. In particular, the image will be set up for the Exidy Sorcerer variation whereby the DJ2D's ROM firmware is located at D000H instead of the standard E000H. Nonetheless, you could still follow the same process outlined herein to recompile the image for the SOL and other target machines if you can find an appropriate CBIOS.ASM for your machine. 
 
 <div style="text-align:center">
 <img src="/Images/CPM 2.2 recompile for Morrow DJ2D.jpg" alt="" style="width:50%; height:auto;">
@@ -14,7 +14,7 @@ The benefits of being able to regenerate such SYSGEN images are several:
 
 - You don't need to go mentally crazy trying to hand-patch the image using DDT or SID, as was the norm back in the day.
 
-- Using my associated Hex-File-Overlay-Tool, you can regenerate the image endlessly at ease from the source .hex files.
+- Using my associated [Hex File Overlay Tool](https://github.com/rcl9/Hex-File-Overlayer-of-CPM-Sysgen-Image), you can regenerate the image endlessly at ease from the source .hex files.
 
 <div style="text-align:center">
 <img src="/Images/Morrow DJ2D S-100 controller card.jpg" alt="" style="width:45%; height:auto;">     <img src="/Images/Morrow DJ2D Shugart 800 8in floppy drive.jpg" alt="" style="width:45%; height:auto;">
@@ -22,7 +22,7 @@ The benefits of being able to regenerate such SYSGEN images are several:
 
 The photos above shows my Morrow DJ2D controller card (Model B Rev 2) and its associated "DISCUS 2D" Shugart 801R 8" Floppy Drive. Purchased July 1981 for US$899 from Mini Micro Mart, Syracuse NY. The firmware ROM is located at D000H and its RAM at D400H. The system is still functional and in active use today.
 
-## A Short Historical Oveview
+## A Short Historical Overview
 
 45 years ago all of the following steps were second nature to me, as common everyday knowledge, and as such I had not documented the process which I had last used to create my 48k and 52k SYSGEN images. Fortunately I had imaged all of my 8" diskettes 15 years ago from which I was able to piece together the necessary boot, CCP, BDOS and CBIOS source files then confirm them against the original images. 
 
@@ -44,18 +44,18 @@ Normally, back in the 1980's, you might do something like this:
 
 The memory layout of the SYSGEN image is as follows:
 
-|Offset from 0100H|Segment Length|Description|
-| :-----: | :---: | :--- |
-| | |
-|0H| 800H| This is where Movcpm.com and/or Sysgen.com reside (at TPA = 0100H)|
-|0800H|800H| DJ2J cold boot, warm boot and firmware| 
-|1000H|800H| The CCP (command control processor)|
-|1800H|E00H| The BDOS|
-|2600|Variable| The CBIOS, up to the end of memory|
+| Offset from 0100H | Segment Length | Description                                                        |
+|:-----------------:|:--------------:|:------------------------------------------------------------------ |
+|                   |                |                                                                    |
+| 0H                | 800H           | This is where Movcpm.com and/or Sysgen.com reside (at TPA = 0100H) |
+| 0800H             | 800H           | DJ2J cold boot, warm boot and firmware                             |
+| 1000H             | 800H           | The CCP (command control processor)                                |
+| 1800H             | E00H           | The BDOS                                                           |
+| 2600              | Variable       | The CBIOS, up to the end of memory                                 |
 
-The CBIOS2.ASM file has a chart at the beginning which explains the layout for the first system track, of which there are 16 sectors (at 128 bytes) allocated to the various cold boot, warm boot and DJ2D firmware, with the remainder of the first track being allocated to the CCP. Track 1 then accomodates the remaining CCP, BDOS and CBIOS. Hence, all of CP/M 2.2 must fit within the confines of the first two tracks. That differs from CP/M 3+ for which the system components can be files on the diskette. 
+The CBIOS2.ASM file has a chart at the beginning which explains the layout for the first system track, of which there are 16 sectors (at 128 bytes) allocated to the various cold boot, warm boot and DJ2D firmware, with the remainder of the first track being allocated to the CCP. Track 1 then accommodates the remaining CCP, BDOS and CBIOS. Hence, all of CP/M 2.2 must fit within the confines of the first two tracks. That differs from CP/M 3+ for which the system components can be files on the diskette. 
 
-If you may ask, why do I have a 52k system and not a 48k system? Well, one of my past projects in the eartly 1980s was to change my BASIC RAM/Pack module into a RAM/Pack offering another 4K of memory to the system. 
+If you may ask, why do I have a 52k system and not a 48k system? Well, one of my past projects in the early 1980s was to change my BASIC RAM/Pack module into a RAM/Pack offering another 4K of memory to the system. 
 
 ## Setting the Memory Size in the Source Files
 
@@ -63,12 +63,12 @@ Most importantly you will need to edit all 4 of the .asm and .mac files (in the 
 
 In the world of CP/M 2.2 the DRI source files are set up based on a 'bias' value relative to a stock 20k CP/M system of 2D00H. You need not be too concerned about that. Hence, for a 24k system, the following chart shows the absolute memory locations of the CCP, BDOS and CBIOS:
 
-|Start of Memory|Description|
-| :---: | :--- |
- | |
-|2D00H| CCP (command control processor)|
-|3500H| BDOS = CCP + 800H|
-|4300H| CBIOS = BDOS + E00H|
+| Start of Memory | Description                     |
+|:---------------:|:------------------------------- |
+|                 |                                 |
+| 2D00H           | CCP (command control processor) |
+| 3500H           | BDOS = CCP + 800H               |
+| 4300H           | CBIOS = BDOS + E00H             |
 
 Note: the CP/M manual talks about the CCP being loaded at 3400H instead of 2D00H as used by Morrow and the Exidy Sorcerer. This would lead to a BIOS being limited to 1536 bytes compared to the current 3328 bytes for the Exidy Sorcerer. 
 
@@ -113,25 +113,24 @@ Some changes have been made to the stock BDOS22.MAC file by myself while trying 
 - Read over the info at the top of the submit *rcl-cpm2.sub* file for general reference. 
 
 - While on drive F0: execute the command "*A:submit rcl-cpm2.sub*" on the CP/M command line. That will compile, link and create .HEX files for the source files of ABOOT.ASM, BDOS22.MAC, ZCCP12.MAC and CBIOS2.MAC. The CP/M batch file will copy these HEX files back over to the Windows "tmp" sub-directory in the Yaze-AG main directory.
-  
-- On the Windows side of things, copy the 4 resulting HEX files into the root directory containing my Hex-File-Overlay-Tool.
 
-- Copy "Sorcerer_zcpm52k-9.bin" from the GitHub Sysgen_images directory to the Hex-File-Overlay-Tool root directory. You can also use Sorcerer_cpm48k.bin if you desire as it won't make a lot of difference to the final outcome. 
+- On the Windows side of things, copy the 4 resulting HEX files into the root directory containing my [Hex File Overlay Tool](https://github.com/rcl9/Hex-File-Overlayer-of-CPM-Sysgen-Image).
 
-- On a DOS command line, execute the Hex-File-Overlay-Tool in a manner similar to the following:
+- Copy "Sorcerer_zcpm52k-9.bin" from the GitHub Sysgen_images directory to the [Hex File Overlay Tool](https://github.com/rcl9/Hex-File-Overlayer-of-CPM-Sysgen-Image) root directory. You can also use Sorcerer_cpm48k.bin if you desire as it won't make a lot of difference to the final outcome. 
+
+- On a DOS command line, execute the [Hex File Overlay Tool](https://github.com/rcl9/Hex-File-Overlayer-of-CPM-Sysgen-Image) in a manner similar to the following:
 
 ```
 hex_file_overlay_of_sysgen_image.exe -a -c -d -b Sorcerer_zcpm52k-9.bin new_sysgen_image.bin
 ```
 
-- You can also override the command line arguments to the Hex-File-Overlay-Tool to provide different filenames for the Boot, CCP, BDOS and/or CBIOS source .hex files. In addition, you can leave out some of the command line arguments to prevent some of these HEX files from being used and hence overlaid on top of the original SYSGEN image. 
+- You can also override the command line arguments to the [Hex File Overlay Tool](https://github.com/rcl9/Hex-File-Overlayer-of-CPM-Sysgen-Image) to provide different filenames for the Boot, CCP, BDOS and/or CBIOS source .hex files. In addition, you can leave out some of the command line arguments to prevent some of these HEX files from being used and hence overlaid on top of the original SYSGEN image. 
 
 - Thereafter you can copy the resulting *new_sysgen_image.bin* to your CP/M machine and run Sysgen.com to copy the image to the boot tracks of a floppy diskette.
 
-
 ## Cursory Notes
 
-Floppy systems diskette (drive A:) has to have 1024 byte sectors in order for the cold and warm boot loaders to work.  Be sure to format all new system diskettes with 1024 byte sectors.  The system diskette can be either single or double sided.  The sector size on normal (non A: drive) diskettes is not restricted.  Thus if you have  a diskette with software that is supposed to run on the A: drive then you should mount the diskette in the B: drive and then PIP it over to a 1024 byte sector system diskette.		
+Floppy systems diskette (drive A:) has to have 1024 byte sectors in order for the cold and warm boot loaders to work.  Be sure to format all new system diskettes with 1024 byte sectors.  The system diskette can be either single or double sided.  The sector size on normal (non A: drive) diskettes is not restricted.  Thus if you have  a diskette with software that is supposed to run on the A: drive then you should mount the diskette in the B: drive and then PIP it over to a 1024 byte sector system diskette.        
 
 ## See Also
 
