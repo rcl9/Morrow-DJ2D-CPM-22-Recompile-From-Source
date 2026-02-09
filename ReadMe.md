@@ -20,13 +20,13 @@ The benefits of being able to regenerate such SYSGEN images are several:
 <img src="/Images/Morrow DJ2D S-100 controller card.jpg" alt="" style="width:45%; height:auto;">     <img src="/Images/Morrow DJ2D Shugart 800 8in floppy drive.jpg" alt="" style="width:45%; height:auto;">
 </div>
 
-The photos above shows my Morrow DJ2D controller card (Model B Rev 2) and its associated "DISCUS 2D" Shugart 801R 8" Floppy Drive. Purchased July 1981 for US$899 from Mini Micro Mart, Syracuse NY. The firmware ROM is located at D000H and its RAM at D400H. The system is still functional and in active use today.
+The photos above show my Morrow DJ2D controller card (Model B Rev 2) and its associated "DISCUS 2D" Shugart 801R 8" Floppy Drive. Purchased July 1981 for US$899 from Mini Micro Mart, Syracuse NY. The firmware ROM is located at D000H and its RAM at D400H. The system is still functional and in active use today. That Shugart drive has turned out to be very reliable over the years and decades! Both have been recently recapped.
 
 ## A Short Historical Overview
 
-45 years ago all of the following steps were second nature to me, as common everyday knowledge, and as such I had not documented the process which I had last used to create my 48k and 52k SYSGEN images. Fortunately I had imaged all of my 8" diskettes 15 years ago from which I was able to piece together the necessary boot, CCP, BDOS and CBIOS source files then confirm them against the original images. 
+45 years ago all of the following steps were second nature to me, as common everyday knowledge, and as such I had not documented the process which I had last used to create my 48k and 52k SYSGEN images. Fortunately I had imaged my 8" diskettes 15 years ago from which I was able to piece together the necessary boot, CCP, BDOS and CBIOS source files then confirm them against the original SYSGEN images at the bit-level. 
 
-The small challenges for this project was to start with no source files, no idea what original files were needed (if they actually still existed in my collection), how Sysgen.com works, how the various files related to the SYSGEN images and (most importantly) how to recreate a 1:1 perfect bit-level reproduction to my original 1983 images. Other than learning of the memory layout, figuring out how ABOOT's multiple cold boot code segments mapped to the various 128-byte sectors was most interesting to unravel in my mind; I had not been aware of that during my time as an active DISCUS 2D user in the early 1980s. 
+The small challenges for this project was to start with no source files, no idea what original files were needed (if they actually still existed in my collection), how Sysgen.com works, how the various files related to the SYSGEN images in memory, how to import and overlay Intel HEX files, and (most importantly) how to recreate a 1:1 perfect bit-level reproduction to my original 1983 images. Other than learning of the memory layout, figuring out how ABOOT's multiple cold boot code segments mapped to the various 128-byte sectors was most interesting to unravel in my mind; I had not been aware of that during my time as an active DISCUS 2D user in the early 1980s. 
 
 The end result of this work was to create a 1:1, exact bit-level replica, of my 1982-era SYSGEN images (of known good and valid quality) against the source files I had on hand + the compilers that I used to recompile all of the old code. It was quite the "software hacker adventure" to get everything aligned and made bit-level identical to the 45 year old images.
 
@@ -42,26 +42,26 @@ Normally, back in the 1980's, you might do something like this:
 
 - Then use Sysgen.com to write that image to the system tracks of your floppy disk. For the DJ2D, the first system track is single density (128 * 26 sectors) and the second system track is double density (1024 * 8 sectors).
 
-The memory layout of the SYSGEN image is as follows:
+The memory layout of the SYSGEN image for the Morrow DJ2D is as follows:
 
 | Offset from 0100H | Segment Length | Description                                                        |
 |:-----------------:|:--------------:|:------------------------------------------------------------------ |
 |                   |                |                                                                    |
 | 0H                | 800H           | This is where Movcpm.com and/or Sysgen.com reside (at TPA = 0100H) |
-| 0800H             | 800H           | DJ2J cold boot, warm boot and firmware                             |
+| 0800H             | 800H           | DJ2J cold boot, warm boot and firmware (16 128-byte/sectors)                             |
 | 1000H             | 800H           | The CCP (command control processor)                                |
 | 1800H             | E00H           | The BDOS                                                           |
 | 2600              | Variable       | The CBIOS, up to the end of memory                                 |
 
 The CBIOS2.ASM file has a chart at the beginning which explains the layout for the first system track, of which there are 16 sectors (at 128 bytes) allocated to the various cold boot, warm boot and DJ2D firmware, with the remainder of the first track being allocated to the CCP. Track 1 then accommodates the remaining CCP, BDOS and CBIOS. Hence, all of CP/M 2.2 must fit within the confines of the first two tracks. That differs from CP/M 3+ for which the system components can be files on the diskette. 
 
-If you may ask, why do I have a 52k system and not a 48k system? Well, one of my past projects in the early 1980s was to change my BASIC RAM/Pack module into a RAM/Pack offering another 4K of memory to the system. 
+If you may ask, why do I have a 52k system and not a 48k system? Well, one of my past projects in the early 1980s was to change my BASIC ROM/Pack module into a RAM/Pack offering another 4K of memory to the system. 
 
 ## Setting the Memory Size in the Source Files
 
 Most importantly you will need to edit all 4 of the .asm and .mac files (in the [Src](/Src) directory to reflect your current memory size. The files are presently set up for 52k.
 
-In the world of CP/M 2.2 the DRI source files are set up based on a 'bias' value relative to a stock 20k CP/M system of 2D00H. You need not be too concerned about that. Hence, for a 24k system, the following chart shows the absolute memory locations of the CCP, BDOS and CBIOS:
+In the world of CP/M 2.2 the DRI source files are set up based on a 'bias' value relative to a stock 20k CP/M system of 2D00H. You need not be too concerned about that. Hence, for a 20k system, the following chart shows the absolute memory locations of the CCP, BDOS and CBIOS:
 
 | Start of Memory | Description                     |
 |:---------------:|:------------------------------- |
@@ -70,7 +70,7 @@ In the world of CP/M 2.2 the DRI source files are set up based on a 'bias' value
 | 3500H           | BDOS = CCP + 800H               |
 | 4300H           | CBIOS = BDOS + E00H             |
 
-Note: the CP/M manual talks about the CCP being loaded at 3400H instead of 2D00H as used by Morrow and the Exidy Sorcerer. This would lead to a BIOS being limited to 1536 bytes compared to the current 3328 bytes for the Exidy Sorcerer. 
+Note: the CP/M manual talks about the CCP being loaded at 3400H instead of 2D00H as used by Morrow and the Exidy Sorcerer. This would lead to a BIOS being limited to 1536 bytes compared to the current 3328 bytes for the Morrow DJ2D.
 
 ## BDOS File Changes
 
@@ -88,7 +88,7 @@ Some changes have been made to the stock BDOS22.MAC file by myself while trying 
 
 ## The Recompilation Process
 
-- The recompilation process outlined herein assumes that you have a CP/M runtime environment set up and available. For this exercise we will be using the Yaze-AG emulator running CP/M 2.2 on Microsoft Windows. I have been very happy with using Yaze-AG to run CP/M except that it can run out of memory if you mount too many disk images. 
+- The recompilation process outlined herein assumes that you have a CP/M runtime environment set up and available. For this exercise we will be using the Yaze-AG emulator running CP/M on Microsoft Windows. I have been very happy with using Yaze-AG to run CP/M except that it can run out of memory if you mount too many disk images. 
 
 - The following discussion will assume that the '.yazerc-z3plus-cpm3' start-up disk assignment looks like the following, whereby we'll be placing the source code on Drive F0:
   
@@ -108,7 +108,7 @@ Some changes have been made to the stock BDOS22.MAC file by myself while trying 
 
 - In the following explanation the files to be copied to/from the Windows environment will be first copied to the "tmp" sub-directory residing within the Yaze-AG home directory folder.
 
-- Copy the files from the GitHub [Src](/Src) directory to the "tmp" directory on your Windows machine which has been made available to Yaze-AG. Then copy them into the CP/M virtual drive F0: via the Yaze-AG CP/M command "a:r tmp/*.*"
+- Copy the files from the GitHub [Src](/Src) directory to the "tmp" directory on your Windows machine which has been made available to Yaze-AG. Then copy them into the CP/M virtual drive F0: via the Yaze-AG CP/M command "a:r tmp/\*.\*"
 
 - Read over the info at the top of the submit *rcl-cpm2.sub* file for general reference. 
 
