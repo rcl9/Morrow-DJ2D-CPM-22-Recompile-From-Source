@@ -110,13 +110,13 @@ Some changes have been made to the stock BDOS22.MAC file by myself while trying 
 
 - Copy the files from the GitHub [Src](/Src) directory to the "tmp" directory on your Windows machine which has been made available to Yaze-AG. Then copy them into the CP/M virtual drive F0: via the Yaze-AG CP/M command "a:r tmp/\*.\*"
 
-- Read over the info at the top of the submit *rcl-cpm2.sub* file for general reference. 
+- Read over the info at the top of the *rcl-cpm2.sub* file for general reference. 
 
 - While on drive F0: execute the command "*A:submit rcl-cpm2.sub*" on the CP/M command line. That will compile, link and create .HEX files for the source files of ABOOT.ASM, BDOS22.MAC, ZCCP12.MAC and CBIOS2.MAC. The CP/M batch file will copy these HEX files back over to the Windows "tmp" sub-directory in the Yaze-AG main directory.
 
 - On the Windows side of things, copy the 4 resulting HEX files into the root directory containing my [Hex File Overlay Tool](https://github.com/rcl9/Hex-File-Overlayer-of-CPM-Sysgen-Image).
 
-- Copy "Sorcerer_zcpm52k-9.bin" from the GitHub Sysgen_images directory to the [Hex File Overlay Tool](https://github.com/rcl9/Hex-File-Overlayer-of-CPM-Sysgen-Image) root directory. You can also use Sorcerer_cpm48k.bin if you desire as it won't make a lot of difference to the final outcome. 
+- Copy "Sorcerer_zcpm52k-9.bin" from the GitHub [Sysgen_images](/Sysgen_images) directory to the [Hex File Overlay Tool](https://github.com/rcl9/Hex-File-Overlayer-of-CPM-Sysgen-Image) root directory. You can also use Sorcerer_cpm48k.bin if you desire as it won't make a lot of difference to the final outcome. 
 
 - On a DOS command line, execute the [Hex File Overlay Tool](https://github.com/rcl9/Hex-File-Overlayer-of-CPM-Sysgen-Image) in a manner similar to the following:
 
