@@ -3,7 +3,7 @@
 This repo carefully documents how to rebuild a CP/M 2.2 "SYSGEN" image, from scratch, for the Morrow DISK JOCKEY 2D S-100 8" floppy disk drive controller card. In particular, the image will be set up for the Exidy Sorcerer variation whereby the DJ2D's ROM firmware is located at D000H instead of the standard E000H. Nonetheless, you could still follow the same process outlined herein to recompile the image for the SOL and other target machines if you can find an appropriate CBIOS.ASM for your machine. 
 
 <div style="text-align:center">
-<img src="/Images/CPM 2.2 recompile for Morrow DJ2D.jpg" alt="" style="width:75%; height:auto;">
+<img src="/Images/CPM 2.2 recompile for Morrow DJ2D.jpg" alt="" style="width:50%; height:auto;">
 </div>
 
 The benefits of being able to regenerate such SYSGEN images are several:
@@ -18,9 +18,11 @@ The benefits of being able to regenerate such SYSGEN images are several:
 
 <div style="text-align:center">
 <img src="/Images/Morrow DJ2D S-100 controller card.jpg" alt="" style="width:45%; height:auto;">     <img src="/Images/Morrow DJ2D Shugart 800 8in floppy drive.jpg" alt="" style="width:45%; height:auto;">
-<br>
-My Morrow DJ2D controller card (Model B Rev 2) and its associated "DISCUS 2D" Shugart 801R 8" Floppy Drive. Purchased July 1981 for US$899 from Mini Micro Mart, Syracuse NY. ROM at D000H, RAM at D400H. Still in active use today by me for this newest retro-computing project. 
 </div>
+
+The photos above shows my Morrow DJ2D controller card (Model B Rev 2) and its associated "DISCUS 2D" Shugart 801R 8" Floppy Drive. Purchased July 1981 for US$899 from Mini Micro Mart, Syracuse NY. The firmware ROM is located at D000H and its RAM at D400H. The system is still functional and in active use today.
+
+## A Short Historical Oveview
 
 45 years ago all of the following steps were second nature to me, as common everyday knowledge, and as such I had not documented the process which I had last used to create my 48k and 52k SYSGEN images. Fortunately I had imaged all of my 8" diskettes 15 years ago from which I was able to piece together the necessary boot, CCP, BDOS and CBIOS source files then confirm them against the original images. 
 
@@ -130,3 +132,7 @@ hex_file_overlay_of_sysgen_image.exe -a -c -d -b Sorcerer_zcpm52k-9.bin new_sysg
 ## Cursory Notes
 
 Floppy systems diskette (drive A:) has to have 1024 byte sectors in order for the cold and warm boot loaders to work.  Be sure to format all new system diskettes with 1024 byte sectors.  The system diskette can be either single or double sided.  The sector size on normal (non A: drive) diskettes is not restricted.  Thus if you have  a diskette with software that is supposed to run on the A: drive then you should mount the diskette in the B: drive and then PIP it over to a 1024 byte sector system diskette.		
+
+## See Also
+
+[Hex File Overlayer Utility for CP/M 2.2 SYSGEN Image Files](https://github.com/rcl9/Hex-File-Overlayer-of-CPM-Sysgen-Image)
