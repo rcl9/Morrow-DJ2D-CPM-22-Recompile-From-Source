@@ -1,0 +1,30 @@
+;
+; This CP/M submit script is used to assemble and make the Sorcerer DJ2D CP/M 2.2 system track (boot) HEX files.
+;
+; Run it via "A:submit rcl-cpm2.sub" within the CP/M 2.2 emulator.
+;
+
+; !!
+; !! Don't forget to set the "msize" variable in each of the 4 main files (ie. 48 for 48k CP/M 2.2 and 52 for 52k CP/M 2.2).
+; !! The files are presently set up for a 52k machine.
+; !!
+
+;
+; The Exidy Sorcerer's DJ2D boot ROM is located at D000H and its RAM is at D400H (where the boot loader code is loaded by the sector 0 code).
+;
+
+; Compile the .ASM files to .hex files
+mac ABOOT
+
+; Compile and link the .MAC files in Z80-mode and create .hex ouput files
+m80 =cbios2 /Z/M
+L80 cbios2,cbios2/N/X/E
+
+m80 =zccp12 /Z/M
+L80 zccp12,zccp12/N/X/E
+
+m80 =bdos22/Z/M/C/L
+L80 bdos22,bdos22/N/X/E
+
+; Write the resulting HEX files back to the host via the Yaze-AG's "write" command on "a:w.com"
+a:w tmp/*.hex b
