@@ -18,8 +18,9 @@ The benefits of being able to regenerate such SYSGEN images are several:
 
 <div style="text-align:center">
 <img src="/Images/Morrow DJ2D S-100 controller card.jpg" alt="" style="width:45%; height:auto;">     <img src="/Images/Morrow DJ2D Shugart 800 8in floppy drive.jpg" alt="" style="width:45%; height:auto;">
-</div>
+<br>
 My Morrow DJ2D controller card (Model B Rev 2) and its associated "DISCUS 2D" Shugart 801R 8" Floppy Drive. Purchased July 1981 for US$899 from Mini Micro Mart, Syracuse NY. ROM at D000H, RAM at D400H. Still in active use today by me for this newest retro-computing project. 
+</div>
 
 45 years ago all of the following steps were second nature to me, as common everyday knowledge, and as such I had not documented the process which I had last used to create my 48k and 52k SYSGEN images. Fortunately I had imaged all of my 8" diskettes 15 years ago from which I was able to piece together the necessary boot, CCP, BDOS and CBIOS source files then confirm them against the original images. 
 
@@ -42,7 +43,7 @@ Normally, back in the 1980's, you might do something like this:
 The memory layout of the SYSGEN image is as follows:
 
 |Offset from 0100H|Segment Length|Description|
-| :-----: | :---: | :---: |
+| :-----: | :---: | :--- |
 | | |
 |0H| 800H| This is where Movcpm.com and/or Sysgen.com reside (at TPA = 0100H)|
 |0800H|800H| DJ2J cold boot, warm boot and firmware| 
@@ -60,9 +61,9 @@ Most importantly you will need to edit all 4 of the .asm and .mac files (in the 
 
 In the world of CP/M 2.2 the DRI source files are set up based on a 'bias' value relative to a stock 20k CP/M system of 2D00H. You need not be too concerned about that. Hence, for a 24k system, the following chart shows the absolute memory locations of the CCP, BDOS and CBIOS:
 
-|Start Memory|Description|
-| :-----: | :---: | :---: |
-| | |
+|Start of Memory|Description|
+| :---: | :--- |
+ | |
 |2D00H| CCP (command control processor)|
 |3500H| BDOS = CCP + 800H|
 |4300H| CBIOS = BDOS + E00H|
@@ -117,8 +118,15 @@ Some changes have been made to the stock BDOS22.MAC file by myself while trying 
 
 - On a DOS command line, execute the Hex-File-Overlay-Tool in a manner similar to the following:
 
-	hex_file_overlay_of_sysgen_image.exe -a -c -d -b Sorcerer_zcpm52k-9.bin new_sysgen_image.bin
+```
+hex_file_overlay_of_sysgen_image.exe -a -c -d -b Sorcerer_zcpm52k-9.bin new_sysgen_image.bin
+```
 
 - You can also override the command line arguments to the Hex-File-Overlay-Tool to provide different filenames for the Boot, CCP, BDOS and/or CBIOS source .hex files. In addition, you can leave out some of the command line arguments to prevent some of these HEX files from being used and hence overlaid on top of the original SYSGEN image. 
 
 - Thereafter you can copy the resulting *new_sysgen_image.bin* to your CP/M machine and run Sysgen.com to copy the image to the boot tracks of a floppy diskette.
+
+
+## Cursory Notes
+
+Floppy systems diskette (drive A:) has to have 1024 byte sectors in order for the cold and warm boot loaders to work.  Be sure to format all new system diskettes with 1024 byte sectors.  The system diskette can be either single or double sided.  The sector size on normal (non A: drive) diskettes is not restricted.  Thus if you have  a diskette with software that is supposed to run on the A: drive then you should mount the diskette in the B: drive and then PIP it over to a 1024 byte sector system diskette.		
