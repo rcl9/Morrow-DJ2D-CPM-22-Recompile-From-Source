@@ -70,7 +70,7 @@ In the world of CP/M 2.2 the DRI source files are set up based on a 'bias' value
 | 3500H           | BDOS = CCP + 800H               |
 | 4300H           | CBIOS = BDOS + E00H             |
 
-Note: the CP/M manual talks about the CCP being loaded at 3400H instead of 2D00H as used by Morrow and the Exidy Sorcerer. This would lead to a BIOS being limited to 1536 bytes compared to the current 3328 bytes for the Morrow DJ2D.
+Note: the CP/M manual talks about the CCP being loaded at 3400H instead of 2D00H (for a 20k system) as used by Morrow and the Exidy Sorcerer. This would lead to a BIOS being limited to 1536 bytes compared to the current 3328 bytes for the Morrow DJ2D.
 
 ## BDOS File Changes
 
