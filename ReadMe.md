@@ -59,7 +59,7 @@ If you may ask, why do I have a 52k system and not a 48k system? Well, one of my
 
 ## Setting the Memory Size in the Source Files
 
-Most importantly you will need to edit all 4 of the .asm and .mac files (in the [Src](/Src) directory to reflect your current memory size. The files are presently set up for 52k.
+Most importantly you will need to edit all 4 of the .asm and .mac files (in the [Src](/Src) directory) to reflect your current memory size. The files are presently set up for 52k.
 
 In the world of CP/M 2.2 the DRI source files are set up based on a 'bias' value relative to a stock 20k CP/M system of 2D00H. You need not be too concerned about that. Hence, for a 20k system, the following chart shows the absolute memory locations of the CCP, BDOS and CBIOS:
 
