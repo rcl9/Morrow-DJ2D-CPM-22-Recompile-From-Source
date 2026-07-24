@@ -135,3 +135,5 @@ Floppy systems diskette (drive A:) has to have 1024 byte sectors in order for th
 ## See Also
 
 [Hex File Overlayer Utility for CP/M 2.2 SYSGEN Image Files](https://github.com/rcl9/Hex-File-Overlayer-of-CPM-Sysgen-Image)
+
+[How to Create Mixed-Mode Geometry CP/M Boot Disks From Scratch in IMG, IMD and HFE File Formats](<https://github.com/rcl9/How-to-Create-CPM-Boot-Disks-From-Scratch-in-IMG--IMD-and-HFE-File-Formats>)
