@@ -2,6 +2,8 @@
 
 This repo documents how to rebuild a CP/M 2.2 "SYSGEN" image, from scratch, for the Morrow DISK JOCKEY 2D S-100 8" floppy disk drive controller card. In particular, the image will be set up for the Exidy Sorcerer variation whereby the DJ2D's ROM firmware is located at D000H instead of the standard E000H. Nonetheless, you could still follow the same process outlined herein to recompile the image for the SOL and other target machines if you can find an appropriate CBIOS.ASM for your machine. 
 
+A [corresponding tutorial](<https://github.com/rcl9/How-to-Create-CPM-Boot-Disks-From-Scratch-in-IMG--IMD-and-HFE-File-Formats>) explains how to take these newly generated Morrow system boot images and create CP/M IMG, IMD and HFE files. 
+
 <div style="text-align:center">
 <img src="/Images/CPM 2.2 recompile for Morrow DJ2D.jpg" alt="" style="width:50%; height:auto;">
 </div>
@@ -137,3 +139,5 @@ Floppy systems diskette (drive A:) has to have 1024 byte sectors in order for th
 [Hex File Overlayer Utility for CP/M 2.2 SYSGEN Image Files](https://github.com/rcl9/Hex-File-Overlayer-of-CPM-Sysgen-Image)
 
 [How to Create Mixed-Mode Geometry CP/M Boot Disks From Scratch in IMG, IMD and HFE File Formats](<https://github.com/rcl9/How-to-Create-CPM-Boot-Disks-From-Scratch-in-IMG--IMD-and-HFE-File-Formats>)
+
+[Morrow DISK JOCKEY 2D Floppy Disk Controller for S-100 Bus - A Historical Compendium & Snaphot of Technical Information](<https://github.com/rcl9/Morrow-DISK-JOCKEY-2D-Floppy-Disk-Controller-for-S100-Bus>)
